@@ -33,7 +33,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Marker? origin;
   Marker? destination;
-// Directions? info;
+
   final _initialCameraPosition = CameraPosition(
       target: LatLng(controller.currentPosition!.latitude,
           controller.currentPosition!.longitude),
@@ -75,11 +75,7 @@ class _MapScreenState extends State<MapScreen> {
           position: position,
         );
       });
-      // final directions = await LocationService()
-      //     .getDirection( origin!.position, position);
-      // setState(() {if(directions!=null){    info = directions as Directions;}
-    
-      // } );
+
     }
   
 }
