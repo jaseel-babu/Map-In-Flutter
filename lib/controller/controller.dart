@@ -1,15 +1,17 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:sample_project/model/model.dart';
+import 'package:sample_project/services/locationService.dart';
 
 class Controller extends GetxController {
   Position? currentPosition;
   String? currentPlace;
   String? destination;
   bool waiting = false;
+  List<PlaceSearch>? searchResults;
   @override
   void onInit() {
-   
     current();
     super.onInit();
   }
@@ -29,6 +31,11 @@ class Controller extends GetxController {
       currentPosition!.latitude,
       currentPosition!.longitude,
     );
+  }
+
+  searchPlaces(String searchword) async {
+    searchResults = await LocationService().getPlaceId(searchword);
+    update();
   }
 
   getCurrentPlaceAddress(double latitude, double longitude) async {

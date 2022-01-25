@@ -16,20 +16,24 @@ final controller = Get.put(Controller());
 
 class _MapScreenState extends State<MapScreen> {
   @override
-  void initState() {
+  void initState() { origin = Marker(
+          markerId:  MarkerId('origin'),
+          infoWindow: const InfoWindow(title: 'Origin'),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+          position: LatLng(controller.currentPosition!.latitude,
+              controller.currentPosition!.longitude),
+        );
+
+        destination = null;
     super.initState();
   }
 
   GoogleMapController? _googleMapController;
-  @override
-  void dispose() {
-    _googleMapController!.dispose();
-    super.dispose();
-  }
 
   Marker? origin;
   Marker? destination;
-Directions? info;
+// Directions? info;
   final _initialCameraPosition = CameraPosition(
       target: LatLng(controller.currentPosition!.latitude,
           controller.currentPosition!.longitude),
@@ -43,17 +47,7 @@ Directions? info;
               markers: {
                 if (origin != null) origin!,
                 if (destination != null) destination!
-              },polylines: {
-                  if (info != null)
-                    Polyline(
-                      polylineId: const PolylineId('overview_polyline'),
-                      color: Colors.red,
-                      width: 5,
-                      points: info!.polylinePoints
-                          .map((e) => LatLng(e.latitude, e.longitude))
-                          .toList(),
-                    ),
-                },
+              },
               onLongPress: addMarker,
               onMapCreated: (controller) => _googleMapController = controller,
               initialCameraPosition: _initialCameraPosition) ,
@@ -72,34 +66,20 @@ Directions? info;
   }
 
   addMarker(LatLng position)async {
-    if (origin == null || (origin != null && destination != null)) {
-      setState(() {
-        origin = Marker(
-          markerId: const MarkerId('origin'),
-          infoWindow: const InfoWindow(title: 'Origin'),
-          icon:
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          position: LatLng(controller.currentPosition!.latitude,
-              controller.currentPosition!.longitude),
-        );
-
-        destination = null;
-        info = null;
-      });
-    } else {
+    
       setState(() {
         destination = Marker(
-          markerId: const MarkerId('destination'),
+          markerId:  MarkerId('destination'),
           infoWindow: const InfoWindow(title: 'Destination'),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           position: position,
         );
       });
-      final directions = await LocationService()
-          .getDirection( origin!.position, position);
-      setState(() {if(directions!=null){    info = directions as Directions;}
+      // final directions = await LocationService()
+      //     .getDirection( origin!.position, position);
+      // setState(() {if(directions!=null){    info = directions as Directions;}
     
-      } );
+      // } );
     }
-  }
+  
 }
