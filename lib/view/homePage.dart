@@ -75,22 +75,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                   textInputAction: TextInputAction.next,
                 ),
-                if (controller.searchResults != null)
-                  Container(
-                    height: 300.0,
-                    child: ListView.builder(
-                      itemCount: controller.searchResults!.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                            title: Text(
-                              controller.searchResults![index].description
-                                  .toString(),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onTap: () {});
-                      },
-                    ),
-                  ),
+              //  if (controller.searchResults != null)
+              //     Container(
+              //       height: 300.0,
+              //       child: ListView.builder(
+              //         itemCount: controller.searchResults!.length,
+              //         itemBuilder: (context, index) {
+              //           return ListTile(
+              //               title: Text(
+              //                  controller.searchResults![index].description
+              //                     .toString(),
+              //                 style: TextStyle(color: Colors.white),
+              //               ),
+              //               onTap: () {});
+              //         },
+              //       ),
+              //     ),
                 ElevatedButton(
                   onPressed: () {
                     controller.destination = destinationController.text;
